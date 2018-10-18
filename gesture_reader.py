@@ -112,6 +112,9 @@ class SampleListener(Leap.Listener):
             input:
                 angle_array - An array of the angles between the Metacarpals (first bone) and the Proximal phalanges (second finger bone). The first index is the thumb
         """
+        if angle_array is None:
+            return False
+        
         drop_thumb = angle_array[1:-1]
         mean_angle = np.mean(drop_thumb)
         threshold = 1.3
@@ -125,6 +128,7 @@ class SampleListener(Leap.Listener):
         """
         Get the status of a fist. If no hand is detected it prints no hands.
         """
+        
         angle_array = self.get_current_angles(controller)
         frame = controller.frame()
         if frame.hands.is_empty == True:
